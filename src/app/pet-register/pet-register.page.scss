@@ -1,0 +1,53 @@
+ion-content {
+  --background: #ffffff;
+}
+
+.custom-item {
+  margin-top: 15px;
+  --border-radius: 8px;
+  --background: #f0f0f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+ion-label {
+  font-weight: bold;
+  color: #302f2f;
+}
+
+ion-input {
+  --padding-start: 10px;
+  color: #302f2f;
+}
+
+ion-button {
+  margin-top: 20px;
+  --border-radius: 8px;
+}
+
+ion-button[color='naranjo'] {
+  background-color: #f28b20;
+  color: #ffffff;
+}
+
+ion-label{
+  color: black !important;
+}
+
+ion-select {
+
+  color: black !important;
+
+}
+
+//INSERTAR FOTO
+.custom-file-input {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  color: #302f2f; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+}

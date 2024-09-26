@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="naranjo">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Registrar Mascota</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="8" size-lg="6">
+        <form (ngSubmit)="registerPet()">
+          <ion-item lines="full" class="custom-item">
+            <ion-label position="stacked" color="negro">Nombre de la Mascota</ion-label>
+            <ion-input type="text" [(ngModel)]="nombreMascota" name="nombreMascota" placeholder="Nombre" required></ion-input>
+          </ion-item>
+
+          <ion-item lines="full" class="custom-item">
+            <ion-label position="stacked" color="negro">Edad (Años)</ion-label>
+            <ion-input type="number" [(ngModel)]="edadAnios" name="edadAnios" placeholder="Años" min="0"></ion-input>
+          </ion-item>
+
+          <ion-item lines="full" class="custom-item">
+            <ion-label position="stacked" color="negro">Edad (Meses)</ion-label>
+            <ion-input type="number" [(ngModel)]="edadMeses" name="edadMeses" placeholder="Meses" min="0" max="11"></ion-input>
+          </ion-item>
+
+          <ion-item lines="full" class="custom-item">
+            <ion-label position="stacked" color="negro">Raza</ion-label>
+            <ion-input type="text" [(ngModel)]="razaMascota" name="razaMascota" placeholder="Raza" required></ion-input>
+          </ion-item>
+
+          <ion-item lines="full" class="custom-item">
+            <ion-label position="stacked">Rango de Peso</ion-label>
+            <ion-select [(ngModel)]="rangoPesoMascota" name="rangoPesoMascota" placeholder="Selecciona el rango de peso" required>
+              <ion-select-option value="0-5kg">0 - 5 kg (Miniatura)</ion-select-option>
+              <ion-select-option value="6-10kg">6 - 10 kg (Pequeño)</ion-select-option>
+              <ion-select-option value="11-20kg">11 - 20 kg (Mediano)</ion-select-option>
+              <ion-select-option value="21-30kg">21 - 30 kg (Grande)</ion-select-option>
+              <ion-select-option value="41kg+">31 kg o más (Gigante)</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none" class="custom-item">
+            <ion-label position="stacked" color="negro">Foto de la Mascota</ion-label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" class="custom-file-input" />
+          </ion-item>
+
+          <ion-button expand="full" type="submit" color="naranjo" class="custom-button">Registrar Mascota</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

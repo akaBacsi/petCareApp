@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Editar Mascota</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <img *ngIf="pet.fotoURL" [src]="pet.fotoURL" alt="Foto de la mascota" />
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="pet.nombre" name="nombre"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Raza</ion-label>
+      <ion-input [(ngModel)]="pet.raza" name="raza"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Edad (Años)</ion-label>
+      <ion-input type="number" [(ngModel)]="pet.edadAnios" name="edadAnios"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Edad (Meses)</ion-label>
+      <ion-input type="number" [(ngModel)]="pet.edadMeses" name="edadMeses"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Rango de Peso</ion-label>
+      <ion-select [(ngModel)]="pet.rangoPeso" name="rangoPeso">
+        <ion-select-option value="0-5kg">0-5 kg</ion-select-option>
+        <ion-select-option value="5-10kg">5-10 kg</ion-select-option>
+        <ion-select-option value="10-20kg">10-20 kg</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Foto de la Mascota</ion-label>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    </ion-item>
+
+    <ion-button expand="full" color="naranjo" (click)="saveChanges()">Guardar Cambios</ion-button>
+  </ion-card>
+</ion-content>

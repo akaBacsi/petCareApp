@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Crear Cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="8" size-lg="6">
+        <img class="logo-center" alt="Mascotas" src="https://i.imgur.com/CWO8spQ.png" />
+        <h2 class="text-center text-bold">¡Crea tu cuenta!</h2>
+        <p class="text-center text-muted">Regístrate para empezar a usar PetCare+.</p>
+
+        <form (ngSubmit)="registerUser()">
+          <ion-item lines="full">
+            <ion-label position="stacked" color="negro">Nombre de Usuario</ion-label>
+            <ion-input type="text" [(ngModel)]="username" name="username" placeholder="Nombre de Usuario" required></ion-input>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label position="stacked" color="negro">Correo</ion-label>
+            <ion-input type="email" [(ngModel)]="email" name="email" placeholder="ejemplo@correo.com" required></ion-input>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label position="stacked" color="negro">Contraseña</ion-label>
+            <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Tu Contraseña" required></ion-input>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label position="stacked" color="negro">Confirmar Contraseña</ion-label>
+            <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirma tu Contraseña" required></ion-input>
+          </ion-item>
+
+          <ion-button expand="full" color="naranjo" type="submit" class="margin-top-20">Registrar</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

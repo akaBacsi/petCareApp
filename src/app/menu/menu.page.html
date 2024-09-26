@@ -1,0 +1,48 @@
+<ion-menu contentId="main-content" side="start">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item button routerLink="/pet-list">
+        Mascotas Registradas
+      </ion-item>
+      <ion-item button routerLink="/pet-register">
+        Registrar Mascota
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <ion-card>
+      <img class="image-center" alt="Mascotas" src="https://i.imgur.com/AkwRGJb.png" />
+      <ion-card-header>
+        <ion-card-title>¡Bienvenido {{ username }}!</ion-card-title>
+        <ion-card-subtitle>Espero encuentres todo lo que buscas aquí!</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        Acá encontrarás información relevante para tu mascota, y todas las funcionalidades de nuestra app.
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</div>

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Mascotas Registradas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item class="pet-item" *ngFor="let mascota of mascotas">
+      <ion-avatar slot="start">
+        <img [src]="mascota.fotoURL || 'assets/default-pet.png'" alt="Foto de {{ mascota.nombre }}">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ mascota.nombre }}</h2>
+        <p>Edad: {{ mascota.edadAnios }} años, {{ mascota.edadMeses }} meses</p>
+        <p>Raza: {{ mascota.raza }}</p>
+        <p>Peso: {{ mascota.rangoPeso }}</p>
+      </ion-label>
+      <ion-button slot="end" color="danger" (click)="deletePet(mascota.id)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" color="primary" (click)="editPet(mascota.id)">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

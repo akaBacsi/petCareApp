@@ -1,0 +1,7 @@
+{
+  "name": "petCareApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

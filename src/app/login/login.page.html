@@ -1,0 +1,41 @@
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="8" size-lg="6">
+        <img class="logo-center" alt="Mascotas" src="https://i.imgur.com/CWO8spQ.png" />
+        <h2 class="text-center">¡Bienvenido de nuevo!</h2>
+        <p class="text-center">Por favor, ingresa tu correo y contraseña para continuar.</p>
+
+        <form (ngSubmit)="loginUser()">
+          <ion-item>
+            <ion-label position="stacked" color="negro">Correo</ion-label>
+            <ion-input
+              type="email"
+              [(ngModel)]="email"
+              name="email"
+              placeholder="ejemplo@correo.com"
+              required
+            ></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Tu contraseña"
+              required
+            ></ion-input>
+          </ion-item>
+
+          <ion-button expand="full" color="naranjo" type="submit">Iniciar Sesión</ion-button>
+        </form>
+
+        <ion-button expand="full" color="gris" (click)="goToRegister()">Registrarse</ion-button>
+
+        <ion-button expand="full" fill="clear" color="medium" (click)="resetPassword()">¿Olvidaste tu contraseña?</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
