@@ -14,6 +14,14 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-md="8" size-lg="6">
         <form (ngSubmit)="registerPet()">
+          <ion-item>
+            <ion-label position="stacked" color="negro">Tipo de Mascota</ion-label>
+            <ion-select [(ngModel)]="tipoMascota" name="tipoMascota" placeholder="Selecciona tipo de mascota" (ionChange)="onTipoMascotaChange()" required>
+              <ion-select-option value="perro">Perro</ion-select-option>
+              <ion-select-option value="gato">Gato</ion-select-option>
+            </ion-select>
+          </ion-item>
+
           <ion-item lines="full" class="custom-item">
             <ion-label position="stacked" color="negro">Nombre de la Mascota</ion-label>
             <ion-input type="text" [(ngModel)]="nombreMascota" name="nombreMascota" placeholder="Nombre" required></ion-input>
@@ -31,19 +39,37 @@
 
           <ion-item lines="full" class="custom-item">
             <ion-label position="stacked" color="negro">Raza</ion-label>
-            <ion-input type="text" [(ngModel)]="razaMascota" name="razaMascota" placeholder="Raza" required></ion-input>
+            <ion-input type="text" [(ngModel)]="razaMascota" name="razaMascota" placeholder="Raza" [disabled]="esRazaDesconocida"></ion-input>
           </ion-item>
 
-          <ion-item lines="full" class="custom-item">
-            <ion-label position="stacked">Rango de Peso</ion-label>
-            <ion-select [(ngModel)]="rangoPesoMascota" name="rangoPesoMascota" placeholder="Selecciona el rango de peso" required>
-              <ion-select-option value="0-5kg">0 - 5 kg (Miniatura)</ion-select-option>
-              <ion-select-option value="6-10kg">6 - 10 kg (Pequeño)</ion-select-option>
-              <ion-select-option value="11-20kg">11 - 20 kg (Mediano)</ion-select-option>
-              <ion-select-option value="21-30kg">21 - 30 kg (Grande)</ion-select-option>
-              <ion-select-option value="41kg+">31 kg o más (Gigante)</ion-select-option>
-            </ion-select>
+          <ion-item>
+            <ion-checkbox [(ngModel)]="esRazaDesconocida" name="esRazaDesconocida"></ion-checkbox>
+            <ion-label color="negro">No sé la raza</ion-label>
           </ion-item>
+
+          <div *ngIf="tipoMascota">
+            <ion-item>
+              <ion-label position="stacked" color="negro">Género</ion-label>
+              <ion-select [(ngModel)]="generoMascota" name="generoMascota" placeholder="Selecciona el género" required>
+                <ion-select-option value="macho">Macho</ion-select-option>
+                <ion-select-option value="hembra">Hembra</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked" color="negro">Rango de Peso</ion-label>
+              <ion-select [(ngModel)]="rangoPesoMascota" name="rangoPesoMascota" placeholder="Selecciona el rango de peso" required>
+                <ion-select-option *ngIf="tipoMascota === 'perro'" value="0-5kg">0 - 5 kg (Miniatura)</ion-select-option>
+                <ion-select-option *ngIf="tipoMascota === 'perro'" value="6-10kg">6 - 10 kg (Pequeño)</ion-select-option>
+                <ion-select-option *ngIf="tipoMascota === 'perro'" value="11-20kg">11 - 20 kg (Mediano)</ion-select-option>
+                <ion-select-option *ngIf="tipoMascota === 'perro'" value="21-30kg">21 - 30 kg (Grande)</ion-select-option>
+                <ion-select-option *ngIf="tipoMascota === 'perro'" value="41kg+">31 kg o más (Gigante)</ion-select-option>
+                <ion-select-option *ngIf="tipoMascota === 'gato'" value="0-4kg">0 - 4 kg (Ligero)</ion-select-option>
+                <ion-select-option *ngIf="tipoMascota === 'gato'" value="5-7kg">5 - 7 kg (Promedio)</ion-select-option>
+                <ion-select-option *ngIf="tipoMascota === 'gato'" value="8kg+">8 kg o más (Pesado)</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
 
           <ion-item lines="none" class="custom-item">
             <ion-label position="stacked" color="negro">Foto de la Mascota</ion-label>

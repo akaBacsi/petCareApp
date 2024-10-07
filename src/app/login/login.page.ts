@@ -21,28 +21,7 @@ export class LoginPage {
     private loadingController: LoadingController
   ) {}
 
-  async loginUser() {
-    const loading = await this.loadingController.create({
-      message: 'Cargando...',
-      duration: 1000,
-      spinner: 'circles'
-    });
-
-    await loading.present();
-
-    try {
-      const userCredential = await this.authService.login(this.email, this.password);
-      console.log('Usuario autenticado:', userCredential.user);
-
-      loading.onDidDismiss().then(() => {
-        this.router.navigate(['/menu']);
-      });
-    } catch (error) {
-      console.error('Error de autenticación:', error);
-      await this.showAlert('Error', 'Correo o contraseña incorrectos.');
-    }
-  }
-
+  // Método para mostrar alertas
   async showAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
@@ -51,6 +30,45 @@ export class LoginPage {
     });
 
     await alert.present();
+  }
+
+  // Método para iniciar sesión
+  async loginUser() {
+    // Validación de correo
+    if (!this.email || !this.email.includes('@')) {
+      await this.showAlert('Error', 'Por favor, ingresa un correo válido.');
+      return;
+    }
+
+    // Validación de contraseña
+    if (!this.password || this.password.length < 6) {
+      await this.showAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
+    // Mostrar el cargando mientras se realiza la petición
+    const loading = await this.loadingController.create({
+      message: 'Cargando...',
+      spinner: 'circles',
+      cssClass: 'custom-loading'
+    });
+
+    await loading.present();
+
+    try {
+      // Realizar la autenticación con Firebase
+      const userCredential = await this.authService.login(this.email, this.password);
+      console.log('Usuario autenticado:', userCredential.user);
+
+      // Cerrar el cargando y redirigir a la página principal
+      await loading.dismiss();
+      this.router.navigate(['/menu']);
+    } catch (error) {
+      console.error('Error de autenticación:', error);
+      // Cerrar el cargando y mostrar el mensaje de error
+      await loading.dismiss();
+      await this.showAlert('Error', 'Correo o contraseña incorrectos.');
+    }
   }
 
   goToRegister() {

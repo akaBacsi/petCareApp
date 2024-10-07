@@ -14,9 +14,20 @@ ion-label {
   color: #302f2f;
 }
 
-ion-input {
+ion-input,
+ion-select {
   --padding-start: 10px;
   color: #302f2f;
+  border: 1px solid #ccc; /* Bordes sutiles para inputs */
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #ffffff; /* Fondo blanco para inputs */
+  margin-top: 8px; /* Espacio entre el label y el input/select */
+}
+
+ion-input:focus, 
+ion-select:focus {
+  border-color: #f28b20; /* Resaltar en color naranja al enfocarse */
+  box-shadow: 0 0 5px rgba(242, 139, 32, 0.5); /* Efecto de sombra al enfocarse */
 }
 
 ion-button {
@@ -27,27 +38,36 @@ ion-button {
 ion-button[color='naranjo'] {
   background-color: #f28b20;
   color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-ion-label{
-  color: black !important;
+ion-button[color='naranjo']:hover {
+  background-color: #dca71c; /* Cambiar color al pasar el mouse */
 }
 
-ion-select {
-
-  color: black !important;
-
+ion-checkbox {
+  margin-top: 15px; /* Espacio superior para los checkboxes */
 }
 
-//INSERTAR FOTO
 .custom-file-input {
   margin-top: 10px;
   padding: 10px;
   background-color: #f0f0f0;
-  color: #302f2f; 
-  border: 1px solid #ccc;
+  color: #302f2f;
+  border: 1px solid #ccc; /* Bordes sutiles */
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+ion-textarea {
+  --background: #f9f9f9; /* Fondo suave para el textarea */
+  border: 1px solid #ccc; /* Bordes sutiles */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+ion-textarea:focus {
+  border-color: #f28b20; /* Resaltar en color naranja al enfocarse */
+  box-shadow: 0 0 5px rgba(242, 139, 32, 0.5); /* Efecto de sombra al enfocarse */
 }
