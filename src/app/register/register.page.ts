@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular'; // Agregamos LoadingController
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 
@@ -19,7 +19,7 @@ export class RegisterPage {
     private authService: AuthService,
     private router: Router,
     private alertController: AlertController,
-    private loadingController: LoadingController, // Inyectamos LoadingController
+    private loadingController: LoadingController,
     private location: Location
   ) {}
 
@@ -37,11 +37,11 @@ export class RegisterPage {
       const userCredential = await this.authService.register(this.email, this.password, this.username);
       console.log('Usuario registrado:', userCredential);
       this.showAlert('Éxito', 'Usuario registrado correctamente.');
-      await loading.dismiss(); // Ocultar cargando cuando se completa el registro
+      await loading.dismiss(); // ocultar cargando cuando se completa el registro
       this.router.navigate(['/menu']);
     } catch (error) {
       console.error('Error de registro:', error);
-      await loading.dismiss(); // Ocultar cargando si hay un error
+      await loading.dismiss(); // ocultar cargando si hay un error
       this.handleRegistrationError(error);
     }
   }

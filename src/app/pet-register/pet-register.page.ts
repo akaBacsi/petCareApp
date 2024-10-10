@@ -22,7 +22,7 @@ export class PetRegisterPage {
   tipoMascota: string = '';
   esRazaDesconocida: boolean = false;
   generoMascota: string = '';
-  tieneAnios: boolean = false; // Atributo para el checkbox
+  tieneAnios: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -42,9 +42,9 @@ export class PetRegisterPage {
 
   onTipoMascotaChange() {
     this.rangoPesoMascota = ''; // Resetea el rango de peso cuando cambias el tipo de mascota
-    this.edadAnios = 0; // Restablecer edad en años
-    this.edadMeses = 0; // Restablecer edad en meses
-    this.generoMascota = ''; // Restablecer género
+    this.edadAnios = 0;         // Restablecer edad en años
+    this.edadMeses = 0;         // Restablecer edad en meses
+    this.generoMascota = '';    // Restablecer genero
   }
 
   async registerPet() {
@@ -55,7 +55,7 @@ export class PetRegisterPage {
       const petData: any = {
         nombre: this.nombreMascota,
         raza: this.esRazaDesconocida ? 'Desconocida' : this.razaMascota,
-        edadAnios: this.tieneAnios ? 0 : this.edadAnios, // Almacenar 0 si tiene años
+        edadAnios: this.tieneAnios ? 0 : this.edadAnios, // Almacenar 0 si tiene 0 años
         edadMeses: this.edadMeses,
         rangoPeso: this.rangoPesoMascota,
         ownerId: user.uid,
@@ -136,7 +136,7 @@ export class PetRegisterPage {
   }
 
   private clearForm() {
-    // Reiniciar todas las propiedades del formulario a sus valores iniciales
+    // Reiniciar a sus valores iniciales para completar denuevo
     this.nombreMascota = '';
     this.razaMascota = '';
     this.edadAnios = 0;

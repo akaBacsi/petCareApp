@@ -50,6 +50,8 @@ export class PetListPage implements OnInit {
       .delete()
       .then(() => {
         console.log('Mascota eliminada con éxito');
+        //FALTA AGREGAR PARA QUE APAREZCA UN SI O NO
+        //SI DESEO ELIMINAR A LA MASCOTA O NO
         this.loadPets(); 
       })
       .catch((error) => {

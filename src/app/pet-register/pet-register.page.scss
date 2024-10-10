@@ -18,16 +18,16 @@ ion-input,
 ion-select {
   --padding-start: 10px;
   color: #302f2f;
-  border: 1px solid #ccc; /* Bordes sutiles para inputs */
-  border-radius: 8px; /* Bordes redondeados */
-  background-color: #ffffff; /* Fondo blanco para inputs */
-  margin-top: 8px; /* Espacio entre el label y el input/select */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  margin-top: 8px;
 }
 
 ion-input:focus, 
 ion-select:focus {
-  border-color: #f28b20; /* Resaltar en color naranja al enfocarse */
-  box-shadow: 0 0 5px rgba(242, 139, 32, 0.5); /* Efecto de sombra al enfocarse */
+  border-color: #f28b20;
+  box-shadow: 0 0 5px rgba(242, 139, 32, 0.5);
 }
 
 ion-button {
@@ -42,11 +42,11 @@ ion-button[color='naranjo'] {
 }
 
 ion-button[color='naranjo']:hover {
-  background-color: #dca71c; /* Cambiar color al pasar el mouse */
+  background-color: #dca71c;
 }
 
 ion-checkbox {
-  margin-top: 15px; /* Espacio superior para los checkboxes */
+  margin-top: 15px;
 }
 
 .custom-file-input {
@@ -54,7 +54,7 @@ ion-checkbox {
   padding: 10px;
   background-color: #f0f0f0;
   color: #302f2f;
-  border: 1px solid #ccc; /* Bordes sutiles */
+  border: 1px solid #ccc; 
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
@@ -62,12 +62,12 @@ ion-checkbox {
 }
 
 ion-textarea {
-  --background: #f9f9f9; /* Fondo suave para el textarea */
-  border: 1px solid #ccc; /* Bordes sutiles */
-  border-radius: 8px; /* Bordes redondeados */
+  --background: #f9f9f9; 
+  border: 1px solid #ccc; 
+  border-radius: 8px; 
 }
 
 ion-textarea:focus {
-  border-color: #f28b20; /* Resaltar en color naranja al enfocarse */
-  box-shadow: 0 0 5px rgba(242, 139, 32, 0.5); /* Efecto de sombra al enfocarse */
+  border-color: #f28b20; 
+  box-shadow: 0 0 5px rgba(242, 139, 32, 0.5); 
 }
