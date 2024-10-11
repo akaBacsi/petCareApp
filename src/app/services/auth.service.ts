@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { User as FirebaseUser } from 'firebase/auth';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -28,18 +30,24 @@ export class AuthService {
     return userCredential;
   }
 
-  // iniciar sesión
-  async login(email: string, password: string) {
-    return await this.afAuth.signInWithEmailAndPassword(email, password);
-  }
-
-  // cerrar sesión
-  async logout() {
-    return await this.afAuth.signOut();
-  }
-
   // restablecer contraseña
   async resetPassword(email: string) {
     return this.afAuth.sendPasswordResetEmail(email);
   }
+
+  
+    // Método para iniciar sesión
+    login(email: string, password: string) {
+      return this.afAuth.signInWithEmailAndPassword(email, password);
+    }
+  
+    // Método para verificar si el usuario está autenticado
+    isAuthenticated(): Observable<boolean> {
+      return this.afAuth.authState.pipe(map(user => !!user));
+    }
+  
+    // Método para cerrar sesión
+    logout() {
+      return this.afAuth.signOut();
+    }
 }

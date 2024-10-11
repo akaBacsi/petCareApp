@@ -1,0 +1,35 @@
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+h1 {
+    color: #f28b20;
+    font-size: 2.5rem;
+    margin-top: 20px;
+}
+
+p {
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+.header-image {
+    max-width: 70%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.error-image {
+    max-width: 60%;
+    height: auto;
+    margin: 30px auto;
+}
+
+ion-button {
+    margin-top: 30px;
+    --border-radius: 8px;
+    color: white;
+    background-color: #f28b20;
+    border: none;
+}
