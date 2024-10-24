@@ -29,12 +29,19 @@
             ></ion-input>
           </ion-item>
 
+          <ion-item>
+            <ion-label>Mantener sesión iniciada</ion-label>
+            <ion-checkbox [(ngModel)]="keepSession"></ion-checkbox>
+          </ion-item>          
+
           <ion-button expand="full" color="naranjo" type="submit">Iniciar Sesión</ion-button>
         </form>
 
         <ion-button expand="full" color="gris" (click)="goToRegister()">Registrarse</ion-button>
 
         <ion-button expand="full" fill="clear" color="medium" (click)="resetPassword()">¿Olvidaste tu contraseña?</ion-button>
+
+        <ion-button expand="full" color="naranjo" (click)="loginWithFingerprint()">Usar Huella Digital</ion-button>        
       </ion-col>
     </ion-row>
   </ion-grid>

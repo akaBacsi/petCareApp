@@ -11,6 +11,14 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 
+// importar SQLite
+import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
+import { IonicStorageModule } from '@ionic/storage-angular';
+
+//PLUGIN NATIVO A A GREGAR
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -18,13 +26,19 @@ import { environment } from '../environments/environment';
     IonicModule.forRoot(),
     AppRoutingModule,
 
-    AngularFireModule.initializeApp(environment.firebaseConfig), // Inicializar Firebase
+    // inicializar Firebase
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
 
-    AngularFireAuthModule, // ODULO para autenticacion de usuarios y mascotas
-
-    AngularFirestoreModule // MODULO para Firestore
+    // inicializar almacenamiento local
+    IonicStorageModule.forRoot()
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    SQLite, // Proveedor de SQLite
+    FingerprintAIO,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
