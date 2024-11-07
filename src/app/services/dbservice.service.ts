@@ -14,7 +14,6 @@ export class DbService {
     this.createDatabase();
   }
 
-  // Inicializa la base de datos al cargar la plataforma
   async createDatabase() {
     await this.platform.ready();
     this.sqlite
@@ -29,13 +28,11 @@ export class DbService {
       .catch((e) => console.log('Error al crear la BD:', e));
   }
 
-  // Crea la tabla de sesión si no existe
   createTable() {
     if (!this.storage) {
       console.error('La base de datos no está lista');
       return;
     }
-
     this.storage
       .executeSql(
         `CREATE TABLE IF NOT EXISTS session(
@@ -52,14 +49,12 @@ export class DbService {
       .catch((e) => console.log('Error al crear la tabla:', e));
   }
 
-  // Agrega una nueva sesión a la base de datos
   addSession(email: string, uid: string) {
     const data = [email, uid];
     if (!this.storage) {
       console.error('La base de datos no está lista');
       return Promise.reject('Database is not ready');
     }
-
     return this.storage
       .executeSql('INSERT INTO session (email, uid) VALUES (?, ?)', data)
       .then(() => {
@@ -68,13 +63,11 @@ export class DbService {
       .catch((e) => console.log('Error al guardar la sesión:', e));
   }
 
-  // Obtiene la sesión almacenada
   getSession() {
     if (!this.storage) {
       console.error('La base de datos no está lista');
       return Promise.reject('Database is not ready');
     }
-
     return this.storage
       .executeSql('SELECT * FROM session LIMIT 1', [])
       .then((res) => {
@@ -92,13 +85,11 @@ export class DbService {
       });
   }
 
-  // Elimina la sesión almacenada
   deleteSession() {
     if (!this.storage) {
       console.error('La base de datos no está lista');
       return Promise.reject('Database is not ready');
     }
-
     return this.storage
       .executeSql('DELETE FROM session', [])
       .then(() => {
@@ -107,7 +98,6 @@ export class DbService {
       .catch((e) => console.log('Error al eliminar la sesión:', e));
   }
 
-  // Devuelve el estado de la base de datos (si está lista o no)
   dbState() {
     return this.isDbReady.asObservable();
   }
