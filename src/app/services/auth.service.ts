@@ -1,53 +1,53 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { from, Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+import { User as FirebaseUser } from 'firebase/auth';
 import { map } from 'rxjs/operators';
-import { DbService } from './dbservice.service';
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private afAuth: AngularFireAuth,
-    private dbService: DbService
-  ) {}
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore) {}
 
-  // Método para obtener el usuario actual de Firebase
-  getCurrentUser(): Promise<any> {
-    return this.afAuth.currentUser;
+  // obtener el usuario actual
+  getCurrentUser(): Promise<FirebaseUser | null> {
+    return this.afAuth.currentUser as Promise<FirebaseUser | null>;
   }
 
-  // Método para obtener detalles del usuario por UID
-  getUserDetails(_uid: string): Observable<any> {
-    return from(this.getCurrentUser()).pipe(map(user => (user ? { uid: user.uid, email: user.email } : null)));
+  // detalles del usuario por UID
+  getUserDetails(uid: string): Observable<any> {
+    const userDoc = this.firestore.collection('users').doc(uid);
+    return userDoc.valueChanges();
   }
 
-  // Registrar nuevo usuario
-  async register(email: string, password: string, _username: string) {
+  // registrar nuevo usuario
+  async register(email: string, password: string, username: string) {
     const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+    await this.firestore.collection('users').doc(userCredential.user?.uid).set({ username });
     return userCredential;
   }
 
-  // Restablecer contraseña
+  // restablecer contraseña
   async resetPassword(email: string) {
     return this.afAuth.sendPasswordResetEmail(email);
   }
 
-  // Iniciar sesión
-  async login(email: string, password: string) {
-    const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
-    return userCredential;
-  }
-
-  // Verificar si el usuario está autenticado (basado en la sesión en SQLite)
-  isAuthenticated(): Observable<boolean> {
-    return from(this.dbService.getSession().then(session => !!session));
-  }
-
-  // Cerrar sesión
-  async logout() {
-    await this.afAuth.signOut();
-    await this.dbService.deleteSession();
-  }
+  
+    // Método para iniciar sesión
+    login(email: string, password: string) {
+      return this.afAuth.signInWithEmailAndPassword(email, password);
+    }
+  
+    // Método para verificar si el usuario está autenticado
+    isAuthenticated(): Observable<boolean> {
+      return this.afAuth.authState.pipe(map(user => !!user));
+    }
+  
+    // Método para cerrar sesión
+    logout() {
+      return this.afAuth.signOut();
+    }
 }
