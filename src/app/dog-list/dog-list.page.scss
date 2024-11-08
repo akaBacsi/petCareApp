@@ -1,0 +1,51 @@
+/* Estilo general del contenido */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Estilo para el botón de retroceso */
+  ion-back-button {
+    color: #ffffff;
+    --background: #f28b20;
+  }
+  
+  /* Estilo para centrar la lista de elementos */
+  .centered-list {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  /* Estilo para cada ion-item */
+  ion-item {
+    --background: #ffffff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Estilo para las miniaturas */
+  ion-thumbnail {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+  
+  /* Estilo para el texto de cada etiqueta */
+  ion-label {
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    margin-left: 10px;
+  }
+  
+  ion-item ion-label:first-of-type {
+    font-weight: bold;
+  }
+  

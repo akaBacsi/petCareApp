@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lista de Perros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+  <!-- Lista de razas de perros -->
+  <ion-list class="centered-list">
+    <ion-item *ngFor="let breed of breeds" (click)="loadImagesForBreed(breed)">
+      <ion-label>{{ breed | titlecase }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Lista de imágenes de perros con etiqueta de raza -->
+  <ion-list class="centered-list" *ngIf="dogImages.length > 0">
+    <ion-item *ngFor="let image of dogImages" (click)="viewImage(image)">
+      <ion-thumbnail slot="start">
+        <img [src]="image" alt="{{ selectedBreed | titlecase }}" />
+      </ion-thumbnail>
+      <ion-label>Raza: {{ selectedBreed | titlecase }}</ion-label> <!-- Muestra la raza seleccionada -->
+    </ion-item>
+  </ion-list>
+</ion-content>

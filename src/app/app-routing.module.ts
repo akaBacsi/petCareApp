@@ -3,7 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-  // Ruta predeterminada que redirige a la página de login
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   
   // Rutas públicas
@@ -32,14 +31,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
 
-  // Ruta a Product Detail sin guard, ya que los datos de la API de Petfood no requieren autenticación
+  // Nueva ruta para dog-list sin AuthGuard, ya que Dog CEO API no requiere autenticación
   { 
-    path: 'product-detail',
-    loadChildren: () => import('./product-detail/product-detail.module').then(m => m.ProductDetailPageModule),
-    canActivate: [AuthGuard] // Opcional, solo si deseas proteger la ruta
+    path: 'dog-list', 
+    loadChildren: () => import('./dog-list/dog-list.module').then(m => m.DogListPageModule) 
   },
 
-  // Ruta para manejo de rutas no encontradas
+  // Ruta para manejar errores 404
   { 
     path: '**', 
     loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundPageModule)
@@ -47,9 +45,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

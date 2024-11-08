@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { AnimationController, IonCard, ToastController } from '@ionic/angular';
+import { AnimationController, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NativeBiometric } from 'capacitor-native-biometric';
@@ -11,7 +11,7 @@ import { Storage } from '@ionic/storage-angular';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements AfterViewInit {
-  @ViewChild(IonCard, { read: ElementRef }) cardElement!: ElementRef<HTMLIonCardElement>;
+  @ViewChild('animatedCard', { read: ElementRef }) cardElement!: ElementRef<HTMLIonCardElement>;
   username: string = '';
 
   constructor(
@@ -23,22 +23,26 @@ export class MenuPage implements AfterViewInit {
   ) {}
 
   async ngAfterViewInit() {
-    const animation = this.animationCtrl
-      .create()
-      .addElement(this.cardElement.nativeElement)
-      .duration(3000)
-      .keyframes([
-        { offset: 0, transform: 'scale(1)' },
-        { offset: 0.5, transform: 'scale(0.9)' },
-        { offset: 1, transform: 'scale(1)' },
-      ])
-      .iterations(Infinity);
+    if (this.cardElement?.nativeElement) {
+      const animation = this.animationCtrl
+        .create()
+        .addElement(this.cardElement.nativeElement)
+        .duration(3000)
+        .keyframes([
+          { offset: 0, transform: 'scale(1)' },
+          { offset: 0.5, transform: 'scale(0.9)' },
+          { offset: 1, transform: 'scale(1)' },
+        ])
+        .iterations(Infinity);
 
-    animation.play();
+      animation.play();
+    } else {
+      console.warn('El elemento cardElement no está disponible en el DOM');
+    }
   }
 
   async ionViewWillEnter() {
-    this.username = (await this.storage.get('username')) || 'Usuario'; // Obtener nombre de usuario desde storage
+    this.username = (await this.storage.get('username')) || 'Usuario';
   }
 
   async registerFingerprint() {
@@ -53,7 +57,7 @@ export class MenuPage implements AfterViewInit {
 
         const currentUser = await this.authService.getCurrentUser();
         if (currentUser) {
-          await this.storage.set('userId', currentUser.uid); // Almacenar el userId para autenticar con huella
+          await this.storage.set('userId', currentUser.uid);
           await this.showToast('Huella digital registrada con éxito');
         }
       } else {
@@ -67,7 +71,7 @@ export class MenuPage implements AfterViewInit {
 
   logout() {
     this.authService.logout();
-    this.storage.remove('userId'); // Limpiar almacenamiento de sesión
+    this.storage.remove('userId');
     this.router.navigate(['/login']);
   }
 
@@ -78,5 +82,20 @@ export class MenuPage implements AfterViewInit {
       position: 'bottom',
     });
     toast.present();
+  }
+
+  onItemClick() {
+  }
+  
+  onItemKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.onItemClick();
+    }
+  }
+  
+  onButtonKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.logout();
+    }
   }
 }
