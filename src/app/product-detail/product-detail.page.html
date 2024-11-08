@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ product?.product_name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="product">
+  <ion-card>
+    <img [src]="product.image_url" alt="{{ product.product_name }}" />
+    <ion-card-header>
+      <ion-card-title>{{ product.product_name }}</ion-card-title>
+      <ion-card-subtitle>{{ product.brands }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Categoría:</strong> {{ product.categories }}</p>
+      <p><strong>Ingredientes:</strong> {{ product.ingredients_text }}</p>
+      <p><strong>Valor energético:</strong> {{ product.nutriments?.energy }} kJ</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

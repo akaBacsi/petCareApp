@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { NativeBiometric } from 'capacitor-native-biometric';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-login',
@@ -12,15 +13,24 @@ import { NativeBiometric } from 'capacitor-native-biometric';
 export class LoginPage {
   email: string = '';
   password: string = '';
+  rememberSession: boolean = false;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private alertController: AlertController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private storage: Storage
   ) {}
 
-  // Método para mostrar alertas
+  async ngOnInit() {
+    await this.storage.create(); // Inicializar almacenamiento
+    const savedUserId = await this.storage.get('userId');
+    if (savedUserId) {
+      this.router.navigate(['/menu']); // Redirigir si hay sesión activa
+    }
+  }
+
   async showAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
@@ -30,7 +40,6 @@ export class LoginPage {
     await alert.present();
   }
 
-  // Método para iniciar sesión
   async loginUser() {
     if (!this.email || !this.email.includes('@')) {
       await this.showAlert('Error', 'Por favor, ingresa un correo válido.');
@@ -50,8 +59,15 @@ export class LoginPage {
 
     try {
       const userCredential = await this.authService.login(this.email, this.password);
-      console.log('Usuario autenticado:', userCredential.user);
       await loading.dismiss();
+
+      if (this.rememberSession && userCredential.user) {
+        await this.storage.set('userId', userCredential.user.uid); // Guardar sesión si el checkbox está activo
+      } else {
+        await this.storage.remove('userId'); // Eliminar sesión si el checkbox está desactivado
+      }
+
+      await this.storage.set('username', userCredential.user?.displayName || 'Usuario'); // Guardar nombre de usuario
       this.router.navigate(['/menu']);
     } catch (error) {
       console.error('Error de autenticación:', error);
@@ -60,30 +76,25 @@ export class LoginPage {
     }
   }
 
-  // Método para iniciar sesión con huella digital sin necesidad de credenciales
   async loginWithFingerprint() {
     try {
-      // Verificar si la autenticación biométrica está disponible en el dispositivo
       const isAvailable = await NativeBiometric.isAvailable();
       if (!isAvailable) {
         await this.showAlert('Error', 'Autenticación biométrica no disponible.');
         return;
       }
 
-      // Solicitar autenticación biométrica
       await NativeBiometric.verifyIdentity({
         reason: 'Para autenticación biométrica',
         title: 'Iniciar Sesión',
         description: 'Usa tu huella digital para iniciar sesión',
       });
 
-      // Obtener usuario registrado con huella en Firebase
-      const registeredUser = await this.authService.getRegisteredUserWithFingerprint();
-      if (registeredUser) {
-        // Redirigir al usuario al menú si la huella está registrada en Firebase
+      const savedUserId = await this.storage.get('userId');
+      if (savedUserId) {
         this.router.navigate(['/menu']);
       } else {
-        await this.showAlert('Error', 'No se encontró una cuenta con esta huella registrada. Por favor, regístrala en el menú.');
+        await this.showAlert('Error', 'No se encontró una cuenta registrada para la autenticación biométrica.');
       }
     } catch (error) {
       console.error('Error en autenticación biométrica:', error);

@@ -2,8 +2,8 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { AnimationController, IonCard, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { NativeBiometric } from 'capacitor-native-biometric';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-menu',
@@ -18,10 +18,11 @@ export class MenuPage implements AfterViewInit {
     private router: Router,
     private animationCtrl: AnimationController,
     private authService: AuthService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private storage: Storage
   ) {}
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     const animation = this.animationCtrl
       .create()
       .addElement(this.cardElement.nativeElement)
@@ -37,21 +38,12 @@ export class MenuPage implements AfterViewInit {
   }
 
   async ionViewWillEnter() {
-    const currentUser = await this.authService.getCurrentUser();
-    if (currentUser) {
-      const userDetails$: Observable<any> = this.authService.getUserDetails(currentUser.uid);
-      userDetails$.subscribe((user) => {
-        if (user) {
-          this.username = user.username;
-        }
-      });
-    }
+    this.username = (await this.storage.get('username')) || 'Usuario'; // Obtener nombre de usuario desde storage
   }
 
   async registerFingerprint() {
     try {
       const isAvailable = await NativeBiometric.isAvailable();
-
       if (isAvailable) {
         await NativeBiometric.verifyIdentity({
           reason: 'Para autenticación biométrica',
@@ -59,18 +51,10 @@ export class MenuPage implements AfterViewInit {
           description: 'Usa tu huella digital para registrar',
         });
 
-        // Si la autenticación fue exitosa, se procede a registrar en Firebase
         const currentUser = await this.authService.getCurrentUser();
         if (currentUser) {
-          await this.authService.linkFingerprintToUser(currentUser.uid);
-          
-          // Verificar que el registro se haya actualizado en la base de datos
-          const userDetails = await this.authService.getUserDetails(currentUser.uid).toPromise();
-          if (userDetails && userDetails.fingerprintRegistered) {
-            this.showToast('Huella digital registrada con éxito');
-          } else {
-            this.showToast('Error al registrar la huella digital. Inténtalo de nuevo.');
-          }
+          await this.storage.set('userId', currentUser.uid); // Almacenar el userId para autenticar con huella
+          await this.showToast('Huella digital registrada con éxito');
         }
       } else {
         this.showToast('Autenticación biométrica no disponible');
@@ -83,6 +67,7 @@ export class MenuPage implements AfterViewInit {
 
   logout() {
     this.authService.logout();
+    this.storage.remove('userId'); // Limpiar almacenamiento de sesión
     this.router.navigate(['/login']);
   }
 
