@@ -12,6 +12,12 @@
       <ion-item button routerLink="/pet-register">
         Registrar Mascota
       </ion-item>
+      <ion-item button routerLink="/link-no-existente">
+        Editar Perfil
+      </ion-item>
+      <ion-item button (click)="registerFingerprint()">
+        Registrar Huella Digital
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
@@ -19,11 +25,9 @@
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar>
-
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-
       <ion-buttons slot="end">
         <ion-button (click)="logout()">
           <ion-icon name="log-out-outline"></ion-icon>

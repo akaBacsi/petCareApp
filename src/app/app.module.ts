@@ -17,14 +17,13 @@ import { environment } from '../environments/environment';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-
-    AngularFireModule.initializeApp(environment.firebaseConfig), // Inicializar Firebase
-
-    AngularFireAuthModule, // ODULO para autenticacion de usuarios y mascotas
-
-    AngularFirestoreModule // MODULO para Firestore
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

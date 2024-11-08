@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
+import { NativeBiometric } from 'capacitor-native-biometric';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,6 @@ export class LoginPage {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private location: Location,
     private alertController: AlertController,
     private loadingController: LoadingController
   ) {}
@@ -28,46 +27,67 @@ export class LoginPage {
       message: message,
       buttons: ['OK']
     });
-
     await alert.present();
   }
 
   // Método para iniciar sesión
   async loginUser() {
-    // Validación de correo
     if (!this.email || !this.email.includes('@')) {
       await this.showAlert('Error', 'Por favor, ingresa un correo válido.');
       return;
     }
-
-    // Validación de contraseña
     if (!this.password || this.password.length < 6) {
       await this.showAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
       return;
     }
 
-    // Mostrar el cargando mientras se realiza la petición
     const loading = await this.loadingController.create({
       message: 'Cargando...',
       spinner: 'circles',
       cssClass: 'custom-loading'
     });
-
     await loading.present();
 
     try {
-      // Realizar la autenticación con Firebase
       const userCredential = await this.authService.login(this.email, this.password);
       console.log('Usuario autenticado:', userCredential.user);
-
-      // Cerrar el cargando y redirigir a la página principal
       await loading.dismiss();
       this.router.navigate(['/menu']);
     } catch (error) {
       console.error('Error de autenticación:', error);
-      // Cerrar el cargando y mostrar el mensaje de error
       await loading.dismiss();
       await this.showAlert('Error', 'Correo o contraseña incorrectos.');
+    }
+  }
+
+  // Método para iniciar sesión con huella digital sin necesidad de credenciales
+  async loginWithFingerprint() {
+    try {
+      // Verificar si la autenticación biométrica está disponible en el dispositivo
+      const isAvailable = await NativeBiometric.isAvailable();
+      if (!isAvailable) {
+        await this.showAlert('Error', 'Autenticación biométrica no disponible.');
+        return;
+      }
+
+      // Solicitar autenticación biométrica
+      await NativeBiometric.verifyIdentity({
+        reason: 'Para autenticación biométrica',
+        title: 'Iniciar Sesión',
+        description: 'Usa tu huella digital para iniciar sesión',
+      });
+
+      // Obtener usuario registrado con huella en Firebase
+      const registeredUser = await this.authService.getRegisteredUserWithFingerprint();
+      if (registeredUser) {
+        // Redirigir al usuario al menú si la huella está registrada en Firebase
+        this.router.navigate(['/menu']);
+      } else {
+        await this.showAlert('Error', 'No se encontró una cuenta con esta huella registrada. Por favor, regístrala en el menú.');
+      }
+    } catch (error) {
+      console.error('Error en autenticación biométrica:', error);
+      await this.showAlert('Error', 'Autenticación biométrica fallida. Intenta nuevamente.');
     }
   }
 
@@ -75,11 +95,6 @@ export class LoginPage {
     this.router.navigate(['/register']);
   }
 
-  goBack() {
-    this.location.back();
-  }
-
-  // restablecer contraseña
   async resetPassword() {
     if (!this.email) {
       this.showAlert('Error', 'Por favor, ingresa tu correo electrónico.');
