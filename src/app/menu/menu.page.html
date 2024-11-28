@@ -6,22 +6,18 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list>
-      <ion-item button routerLink="/pet-list" (click)="onItemClick()" (keyup)="onItemKeyUp($event)">
+      <ion-item button routerLink="/pet-list" (click)="onItemClick()">
         Mascotas Registradas
       </ion-item>
-      <ion-item button routerLink="/pet-register" (click)="onItemClick()" (keyup)="onItemKeyUp($event)">
+      <ion-item button routerLink="/pet-register" (click)="onItemClick()">
         Registrar Mascota
       </ion-item>
-      <ion-item button routerLink="/link-no-existente" (click)="onItemClick()" (keyup)="onItemKeyUp($event)">
-        Editar Perfil
-      </ion-item>
-      <ion-item button (click)="registerFingerprint()" (keyup)="onItemKeyUp($event)">
-        Registrar Huella Digital
-      </ion-item>
-      <ion-item button routerLink="/dog-list" (click)="onItemClick()" (keyup)="onItemKeyUp($event)">
+      <ion-item button routerLink="/dog-list" (click)="onItemClick()">
         Lista de Razas
       </ion-item>
-
+      <ion-item button routerLink="/subscribe" (click)="onItemClick()">
+        Agradecer
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
@@ -33,7 +29,7 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button (click)="logout()" (keyup)="onButtonKeyUp($event)">
+        <ion-button (click)="logout()">
           <ion-icon name="log-out-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
@@ -41,14 +37,14 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    <ion-card *ngIf="username">
+    <ion-card>
       <img class="image-center" alt="Mascotas" src="https://i.imgur.com/AkwRGJb.png" />
       <ion-card-header>
         <ion-card-title>¡Bienvenido {{ username }}!</ion-card-title>
-        <ion-card-subtitle>Espero encuentres todo lo que buscas aquí!</ion-card-subtitle>
+        <ion-card-subtitle>¡Gracias por usar PetCare+!</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        Acá encontrarás información relevante para tu mascota, y todas las funcionalidades de nuestra app.
+        Encuentra toda la información para el cuidado de tus mascotas.
       </ion-card-content>
     </ion-card>
   </ion-content>

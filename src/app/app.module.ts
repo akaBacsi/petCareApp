@@ -13,6 +13,8 @@ import { environment } from '../environments/environment';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
+    EmailComposer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

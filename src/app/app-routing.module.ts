@@ -30,12 +30,14 @@ const routes: Routes = [
     loadChildren: () => import('./pet-list/pet-list.module').then(m => m.PetListPageModule),
     canActivate: [AuthGuard]
   },
-
-  // Nueva ruta para dog-list sin AuthGuard, ya que Dog CEO API no requiere autenticación
   { 
     path: 'dog-list', 
     loadChildren: () => import('./dog-list/dog-list.module').then(m => m.DogListPageModule) 
   },
+  {
+    path: 'subscribe',
+    loadChildren: () => import('./subscribe/subscribe.module').then(m => m.SubscribePageModule),
+  },  
 
   // Ruta para manejar errores 404
   { 

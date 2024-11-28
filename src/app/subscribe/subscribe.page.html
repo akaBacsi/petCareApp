@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Suscríbete al Boletín</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Agradece al equipo!</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Correo Electrónico</ion-label>
+        <ion-input [(ngModel)]="email" type="email" placeholder="Ingresa tu correo" required></ion-input>
+      </ion-item>
+      
+      <ion-button expand="full" (click)="subscribe()">Agradecer</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
